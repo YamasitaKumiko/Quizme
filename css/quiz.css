@@ -1,0 +1,61 @@
+#popLayer {
+    display: none;
+    background-color: #B3B3B3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    -moz-opacity: 0.8;
+    opacity: .80;
+    filter: alpha(opacity=80);
+}
+
+#popBox {
+    display: none;
+    background-color: #FFFFFF;
+    z-index: 11;
+    width: 300px;
+    height: 80px;
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    margin:auto;
+}
+
+#popBox .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color: #b34343;
+}
+
+
+#quiz{
+    background-color: white;
+    width: 600px;
+    height: 300px;
+    border: 1px  solid #648647;
+    font-size: 18pt;
+    font-family: "Times New Roman";
+    position: absolute;
+    top: 50px;
+    left: 430px;
+    text-align: center;
+}
+
+#quit_button{
+    position: absolute;
+    top: 400px;
+    left: 710px;
+}
+
+#check{
+    visibility: hidden;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+

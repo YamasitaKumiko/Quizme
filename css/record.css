@@ -1,0 +1,17 @@
+#table{
+
+    font-size: 12pt;
+    position: absolute;
+    top: 100px;
+    left: 300px;
+    text-align: center;
+}
+
+#top{
+    font-size: 20pt;
+    /*margin-top: 30px;*/
+    position: absolute;
+    top: 30px;
+    left: 500px;
+    text-align: center;
+}

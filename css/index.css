@@ -1,0 +1,59 @@
+h3 {
+    margin-top: 20px;
+    padding:0px;
+    font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size:24px;
+    height:24px;
+}
+
+#index{
+    position: relative;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#index div a{
+    font-size: 18pt;
+}
+
+#popLayer {
+    display: none;
+    background-color: #B3B3B3;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+
+#popBox {
+    display: none;
+    background-color: #FFFFFF;
+    z-index: 11;
+    width: 500px;
+    height: 200px;
+    position:absolute;
+    top:100px;
+    left:40px;
+    margin:auto;
+}
+
+#popBox .close{
+    text-align: right;
+    margin-right: 5px;
+    background-color: #b34343;
+}
+
+#regulation{
+    position: absolute;
+    left: 40px;
+    top: 40px;
+}
+
+#word{
+    font-size: 14pt;
+}

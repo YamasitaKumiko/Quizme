@@ -1,0 +1,14 @@
+#form{
+    position: absolute;
+    top: 50px;
+    left: 500px;
+}
+
+#form h1{
+    margin-bottom: 60px;
+}
+
+#form div{
+    margin-top: 20px;
+    font-size: 16pt;
+}
