@@ -11,12 +11,14 @@ echo $password;
 $passwordcorrect = false;
 $user = GetUserInfo($name)->fetch();
 $encryption = $user["password"];
+$user_id = $user["userid"];
 
 if ($encryption == null){
     echo "<script>alert('wrong username')</script>";
 }
 elseif (password_verify($password,$encryption)){
     $_SESSION['name'] = $name;
+    $_SESSION['user_id'] = $user_id;
     $passwordcorrect = true;
     echo "<script>alert('welcome back')</script>";
 }

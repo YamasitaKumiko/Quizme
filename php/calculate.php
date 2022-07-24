@@ -1,21 +1,25 @@
 <?php
 session_start();
 
-$choice = $_POST['option'];
-$answer = $_SESSION['answer'];
-$wrong = $_SESSION['num_wrong'];
-$correct = $_SESSION['num_correct'];
+$ans = $_POST['answer'];
+array_push($_SESSION['wrong_answer'], $ans);
+$answer = end($_SESSION['answer']);
 $grade = $_SESSION['grade'];
-$difficulty = $_SESSION['difficulty'];
-if ($choice == $answer){
-    $correct++;
-    $grade += $difficulty;
+
+function normalizeString($str){
+    $str = trim($str);
+    $str = preg_replace('/\s+/'," ",$str);
+    return strtolower($str);
 }
-else{
-    $wrong++;
+$ans = normalizeString($ans);
+if ( $ans == strtolower($answer)){
+    $grade ++;
+    array_pop($_SESSION['question_id']);
+    array_pop($_SESSION['question']);
+    array_pop($_SESSION['wrong_answer']);
+    array_pop($_SESSION['answer']);
 }
-$_SESSION['num_correct'] = $correct;
-$_SESSION['num_wrong'] = $wrong;
 $_SESSION['grade'] = $grade;
+$_SESSION["index"]++;
 header("Location: quiz.php");
 ?>

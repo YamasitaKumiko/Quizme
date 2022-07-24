@@ -1,54 +1,88 @@
 <?php
 session_start();
+ini_set("display_errors", 0);
+error_reporting(E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_WARNING);
 include("../include/opening.inc.php");
-if ( time()<$_SESSION['start'] )
+include("../include/util.inc.php");
+if (time() < $_SESSION['start'])
     $_SESSION['start'] = time();
-$_SESSION['number_question'] = 0;
-$correct = $_SESSION['num_correct'];
-$wrong = $_SESSION['num_wrong'];
 
-function countLines($filepath){
-    $handle = fopen( $filepath, "r+" );
-    $count = 0;
-    while( fgets($handle) ) {
-        $count++;
+//function countLines($filepath)
+//{
+//    $handle = fopen($filepath, "r+");
+//    $count = 0;
+//    while (fgets($handle)) {
+//        $count++;
+//    }
+//    fclose($handle);
+//    return $count;
+//}
+//根据种类、难度、题量获取题目集
+function getQuestion()
+{
+    $questions = getQuestionPublic($_POST["option1"], intval($_POST["option2"]), intval($_POST["option3"]));
+    $rs = $questions->fetchAll(PDO::FETCH_BOTH);
+    return $rs;
+}
+//难度值转换
+function getLevel($value)
+{
+    switch ($value) {
+        case 1:
+            return "easy";
+        case 2:
+            return "medium";
+        case 3:
+            return "hard";
     }
-    fclose($handle);
-    return $count;
 }
 
-function getquestion($filename, $Line){
-    $fp = new SplFileObject($filename,'r+');
-    $fp -> seek($Line-1);
-    return trim(($fp -> current()), "\n");
+//do {
+//    $questionused = $_SESSION['question'];
+//    $number_1 = mt_rand(0, 3);
+//    $cate = $category[$number_1];
+//    $question_dir = "../question/" . $cate . ".txt";
+//    $count = countLines($question_dir);
+//    $number_2 = mt_rand(1, $count);
+//    $number = $number_1 * 1000 + $number_2;
+//    $_SESSION['question'] = $questionused;
+//    $rs = getquestion();
+//    $current_question = $rs[i];
+//    $content = explode(";", $rs);
+//    $description = $content[0];
+//    $A = $content[1];
+//    $B = $content[2];
+//    $C = $content[3];
+//    $difficulty = $difficulties[$content[5]];
+//    $answer = $content[4];
+//    $_SESSION['answer'] = $answer;
+//    $_SESSION['difficulty'] = $content[5];
+//
+//} while (in_array($number, $questionused));
+//array_push($questionused, $number);
+//
+//$_SESSION['question'] = $questionused;
+if ($_SESSION['index'] == 0) {
+    $rs = getQuestion();
+    $size = count($rs);
+    $_SESSION['all_questions'] = $rs;
+    $_SESSION['size'] = $size;
+    $_SESSION['category'] = $_POST["option1"];
+    $_SESSION['level'] = intval($_POST["option2"]);
 }
 
-$category = ['health','nature','culture','history'];
-$difficulties = [' ','simple','middle','difficult'];
-do{
-    $questionused = $_SESSION['question'];
-    $number_1 = mt_rand(0,3);
-    $cate = $category[$number_1];
-    $question_dir = "../question/".$cate.".txt";
-    $count = countLines($question_dir);
-    $number_2 = mt_rand(1,$count);
-    $number = $number_1*1000+$number_2;
-    $_SESSION['question'] = $questionused;
-    $question = getquestion($question_dir,$number_2);
-    $content = explode(";",$question);
-    $description = $content[0];
-    $A = $content[1];
-    $B = $content[2];
-    $C = $content[3];
-    $difficulty = $difficulties[$content[5]];
-    $answer = $content[4];
-    $_SESSION['answer'] = $answer;
-    $_SESSION['difficulty'] = $content[5];
 
-}while(in_array($number,$questionused));
-array_push($questionused,$number);
+$current_question = array_shift($_SESSION['all_questions']);
+if($current_question){
+    $content = $current_question['question'];
+    $answer = $current_question['answer'];
+    $difficulty = getLevel($current_question['level']);
+    array_push($_SESSION['question_id'], $current_question['id']);
+    array_push($_SESSION['question'], $content);
+    array_push($_SESSION['answer'], $answer);
+}
 
-$_SESSION['question'] = $questionused;
 ?>
 
     <link rel="stylesheet" type="text/css" href="../css/common.css">
@@ -56,39 +90,51 @@ $_SESSION['question'] = $questionused;
     <script src="../js/quiz.js"></script>
     <script src="js/jquery-3.3.1.js"></script>
 <?php
-if (!isset($_SESSION['name'])){
+if (!isset($_SESSION['name'])) {
     $banner = "<a href = 'signin_form.php' style='font-weight: bolder;text-decoration: none' >Sign in</a>";
-}
-else{
+} else {
     $name = $_SESSION['name'];
     $banner = "<a href = 'signout.php' title='click to sign out' style='font-weight: bolder;text-decoration: none'>Welcome $name</a>";
 }
 ?>
-<span><?= $banner?></span><br><br>
-<span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
-<div id="quiz">
-    <div><?= $description?></div>
-    <div>(<?= $difficulty?>)</div>
-    <form name="quiz_form" method="post" action="calculate.php">
-        <input type="radio" name="option" value="A"><?= $A ?><br>
-        <input type="radio" name="option" value="B"><?= $B ?><br>
-        <input type="radio" name="option" value="C"><?= $C ?><br>
-        <input type="text" name="option" value="C"><?= $C ?><br>
-        <input type="button" value="check" onclick="Check('<?= $answer?>')">
-        <input type="submit" value="Next"><br>
-    </form>
-    <div id="check"><img src="../images/correct.png">Congratulation!</div>
-</div>
+    <span><?= $banner ?></span><br><br>
+    <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
+    <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
 
+        <div id="quiz">
+            <div><?php
+                if($content){
+                    echo $content;
+                }else{
+                    echo"all Questions have been finished,click Finish to show your grade";
+                }
+                ?>
+            </div>
+            <div><?php
+                if($difficulty){
+                    echo $difficulty;
+                }
+                ?></div>
+            <form name="quiz_form" method="post" action="calculate.php">
+                <input type="text" name="answer" id="answer"><br>
+                <input type="submit" value="Next" id="Next"><br>
+            </form>
+        </div>
 
-<input type="button" id="quit_button" value="Finish" onclick="popBox()">
-<div id="popLayer">
-    <div id="popBox">
-        <div id="word">want to see your garde?</div>
-        <input type="button"  value="no" onclick="home()">
-        <input type="button"  value="yes" onclick="show()">
-    </div>
-</div>
+<?php
+if ($_SESSION["index"] == $_SESSION["size"] ) {
+    echo "<script type='text/javascript'>document.getElementById('Next').style.display='none'</script>";
+    echo "<script type='text/javascript'>document.getElementById('answer').style.display='none'</script>";
+    echo '<input type="button" id="quit_button" value="Finish" onclick="popBox()">';
+    echo '<div id="popLayer">';
+    echo '<div id="popBox">';
+    echo '<div id="word">want to see your garde?</div>';
+    echo '<input type="button" value="no" onclick="home()">';
+    echo '<input type="button" value="yes" onclick="show()">';
+    echo '</div>';
+    echo '</div>';
+}
+?>
 
 <?php
 include("../include/closing.html");
