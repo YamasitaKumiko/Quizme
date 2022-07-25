@@ -1,3 +1,3 @@
 <?php
-phpinfo();
-$test = new PDO();
+include("include/util.inc.php");
+importmysql("database.csv");

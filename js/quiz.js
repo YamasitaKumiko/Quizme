@@ -25,3 +25,22 @@ function show() {
 function home(){
     window.location.href="../index.php";
 }
+//
+// function showlist(list){
+//     let table_head = document.getElementById("table_head");
+//     let len = list.length;
+//     for (var i = 0; i < len; i++){
+//         var tr = document.createElement("tr");
+//         for(var j =0; j < 3; j++) {
+//             var td = document.createElement("td");
+//             td.innerHTML=list[i][j];
+//             tr.appendChild(td);
+//         }
+//         table_head.appendChild(tr);
+//     }
+//     document.getElementById('show_wrong').hidden=false;
+// }
+
+function showlist(id){
+    window.location.href="../php/showwrong.php?id="+id;
+}

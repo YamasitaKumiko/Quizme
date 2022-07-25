@@ -23,6 +23,28 @@ function getPDO() {
     }
 }
 
+//csv文件导入数据库
+function importmysql($filepath){
+    $PDO = getPDO();
+    $handle = new SplFileObject($filepath,'r+');
+    while( $line=$handle->fgets() ) {
+        $content = explode("#",$line);
+        switch ($content[1]) {
+            case "medium":
+                $level = 2;
+                break;
+            case "easy":
+                $level = 1;
+                break;
+            case "hard":
+                $level = 3;
+                break;
+        }
+        $stmt = $PDO->prepare("INSERT INTO project.questions(`category`,`level`,`question`,`answer`) VALUES (?,?,?,?);");
+        $stmt->execute([$content[0],$level,$content[2],$content[3]]);
+    }
+}
+
 function AddUser($username , $password){
     $PDO = getPDO();
     $stmt = $PDO->prepare("INSERT INTO project.user(`username`,`password`) VALUES (?,?);");
@@ -90,4 +112,12 @@ function addWrongQuestion($item_id,$user_id,$question_id,$wrong_answer){
     $PDO = getPDO();
     $stmt = $PDO->prepare("INSERT INTO project.wrong_questions(`item_id`,`user_id`,`question_id`,`wrong_answer`) VALUES (?,?,?,?);");
     $stmt->execute([$item_id,$user_id,$question_id,$wrong_answer]);
+}
+
+//通过item_id获取错题
+function showWrongListByItem($item_id){
+    $PDO = getPDO();
+    $result = $PDO->query("SELECT project.questions.question,project.wrong_questions.wrong_answer FROM project.questions inner join project.wrong_questions 
+    on project.wrong_questions.question_id = project.questions.id AND project.wrong_questions.item_id = $item_id");
+    return $result;
 }
