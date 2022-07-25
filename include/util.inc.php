@@ -49,10 +49,10 @@ function AddQuestion($name){
     $stmt->execute();
 }
 
-function addrecord($name,$grade,$date,$time,$category,$level,$size){
+function addrecord($name,$grade,$date,$category,$level,$size,$timed){
     $PDO = getPDO();
-    $stmt = $PDO->prepare("INSERT INTO project.record(`username`,`grade`,`date`,`time`, `category`,`level`,`size`) VALUES (?,?,?,?,?,?,?);");
-    $stmt->execute([$name,$grade,$date,$time,$category,$level,$size]);
+    $stmt = $PDO->prepare("INSERT INTO project.record(`username`,`grade`,`date`,`category`,`level`,`size`,`limited_time`) VALUES (?,?,?,?,?,?,?);");
+    $stmt->execute([$name,$grade,$date,$category,$level,$size,$timed]);
     $id = $PDO->lastInsertId();
     return $id;
 }

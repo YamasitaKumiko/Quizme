@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-$ans = $_POST['answer'];
-array_push($_SESSION['wrong_answer'], $ans);
-$answer = end($_SESSION['answer']);
+array_shift($_SESSION['all_questions']);
+$ans = $_POST['answer'];//用户回答的答案
+$answer = $_SESSION['ans'];//正确答案
 $grade = $_SESSION['grade'];
 
 function normalizeString($str){
@@ -14,10 +14,11 @@ function normalizeString($str){
 $ans = normalizeString($ans);
 if ( $ans == strtolower($answer)){
     $grade ++;
-    array_pop($_SESSION['question_id']);
-    array_pop($_SESSION['question']);
-    array_pop($_SESSION['wrong_answer']);
-    array_pop($_SESSION['answer']);
+}else{
+    array_push($_SESSION['question_id'], $_SESSION['qid']);
+    array_push($_SESSION['question'], $_SESSION['que']);
+    array_push($_SESSION['wrong_answer'], $ans);
+    array_push($_SESSION['answer'], $answer);
 }
 $_SESSION['grade'] = $grade;
 $_SESSION["index"]++;

@@ -11,9 +11,6 @@ else {
     $name = "user";
 }
 $welcome = 'Hi! '.$name.":";
-$start = $_SESSION['start'];
-$end = $_SESSION['end'];
-$second = $end - $start;
 $grade = $_SESSION['grade'];
 $size = $_SESSION['size'];
 $date = $_SESSION['date'];
@@ -24,7 +21,11 @@ if (isset($_SESSION['name'])){
     $a = "<a href='record.php' style='text-decoration: none; font-size: 20pt; position: absolute; top: 400px;left: 30px'>show record</a>";
 }
 else $a = null;
-$item_id = addrecord($name,$grade,$date,$second,$category,$level,$size);
+if($_SESSION['times']>20)
+    $time = 0;
+else
+    $time = $_SESSION['times'];
+$item_id = addrecord($name,$grade,$date,$category,$level,$size,$time);
 ?>
 
     <link rel="stylesheet" type="text/css" href="../css/grade.css">
@@ -45,7 +46,6 @@ else{
 <div id="grade">
     <h1><?= $welcome?></h1>
     <h2>scores:     <?= $grade?>/<?= $size?></h2>
-    <h2>time cost:     <?=$second?> seconds</h2>
     <h2>wrong question list:</h2>
     <?php
     while(!empty($_SESSION['question_id'])){
@@ -72,8 +72,7 @@ else{
 
 <?php
 
-$_SESSION['start'] = 9999999999;
-$_SESSION['end'] = 9999999999;
+$_SESSION['times'] = 9999999999;
 $_SESSION['grade'] = 0;
 $_SESSION['date'] = date('Y-m-d');
 $_SESSION['all_questions'] = array();

@@ -19,6 +19,11 @@ if (!isset($_SESSION['name'])) {
 <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
 <div id="quiz">
     <form name="quiz_form" method="post" action="quiz.php">
+        <label>Timed:</label>
+        <input type="radio" name="option0" value=0 onclick="document.getElementById('times').style.display='none'"><label>no</label>
+        <input type="radio" name="option0" value=1 onclick="document.getElementById('times').style.display=''"><label>yes</label>
+        <input type="number" name="times" id="times" style="display: none" placeholder="[5-20]s" min="5" max="20">
+        <br><br>
         <label>Category:</label>
         <input type="radio" name="option1" value="science"><label>science</label>
         <input type="radio" name="option1" value="geography"><label>geography</label>

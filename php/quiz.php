@@ -5,6 +5,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 error_reporting(E_ALL ^ E_WARNING);
 include("../include/opening.inc.php");
 include("../include/util.inc.php");
+$_SESSION['qid'] = null;
+$_SESSION['que'] = "";
+$_SESSION['wans'] = "";
 if (time() < $_SESSION['start'])
     $_SESSION['start'] = time();
 
@@ -70,17 +73,20 @@ if ($_SESSION['index'] == 0) {
     $_SESSION['size'] = $size;
     $_SESSION['category'] = $_POST["option1"];
     $_SESSION['level'] = intval($_POST["option2"]);
+    if($_POST["option0"] == 1)
+        $_SESSION['times'] = intval($_POST["times"]);
 }
+$times = $_SESSION['times'] * 1000;
 
 
-$current_question = array_shift($_SESSION['all_questions']);
+$current_question = current($_SESSION['all_questions']);
 if($current_question){
     $content = $current_question['question'];
     $answer = $current_question['answer'];
     $difficulty = getLevel($current_question['level']);
-    array_push($_SESSION['question_id'], $current_question['id']);
-    array_push($_SESSION['question'], $content);
-    array_push($_SESSION['answer'], $answer);
+    $_SESSION['qid'] = $current_question['id'];
+    $_SESSION['que'] = $content;
+    $_SESSION['ans'] = $answer;
 }
 
 ?>
@@ -119,16 +125,20 @@ if (!isset($_SESSION['name'])) {
                 <input type="text" name="answer" id="answer"><br>
                 <input type="submit" value="Next" id="Next"><br>
             </form>
+            <script>
+                var time = Number(<?php echo $times; ?>)
+                setTimeout("quiz_form.submit()",time)</script>
         </div>
 
 <?php
+
 if ($_SESSION["index"] == $_SESSION["size"] ) {
     echo "<script type='text/javascript'>document.getElementById('Next').style.display='none'</script>";
     echo "<script type='text/javascript'>document.getElementById('answer').style.display='none'</script>";
     echo '<input type="button" id="quit_button" value="Finish" onclick="popBox()">';
     echo '<div id="popLayer">';
     echo '<div id="popBox">';
-    echo '<div id="word">want to see your garde?</div>';
+    echo '<div id="word">want to see your grade?</div>';
     echo '<input type="button" value="no" onclick="home()">';
     echo '<input type="button" value="yes" onclick="show()">';
     echo '</div>';
