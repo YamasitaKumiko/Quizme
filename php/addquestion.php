@@ -23,45 +23,40 @@ else{
     <div style="margin-top: 30px;margin-bottom: 10px;font-size: 16pt;font-family: 'Times New Roman'">
     Category
     <select name="category" form="form">
-        <option value="history">history</option>
-        <option value="nature">nature</option>
-        <option value="culture">culture</option>
-        <option value="healthy">healthy</option>
+        <option value="geography">geography</option>
+        <option value="sport">sport</option>
+        <option value="science">science</option>
+        <option value="general">general</option>
     </select>
     <br>
     </div>
     <div style="margin-bottom: 10px;font-size: 16pt;font-family: 'Times New Roman'">
     Difficulty
-    <select name="difficulty" form="form">
-        <option value="simple">simple</option>
-        <option value="middle">middle</option>
-        <option value="difficult">difficult</option>
+    <select name="level" form="form">
+        <option value=1>easy</option>
+        <option value=2>medium</option>
+        <option value=3>hard</option>
     </select>
     <br>
+    </div>
+    <div style="margin-bottom: 10px;font-size: 16pt;font-family: 'Times New Roman'">
+        PublicOrNot
+        <select name="creator" form="form">
+            <option value=0>Public</option>
+            <option value=<?php echo $_SESSION["user_id"];?>>Private</option>
+        </select>
+        <br>
     </div>
     <form action="doadd.php" method="post" id="form">
         <div>Question</div>
         <br>
-        <input type="text" name="question" size="60">
-        <br>
-        <div>OptionA</div>
-        <br>
-        <input type="text" name="A">
-        <br>
-        <div>OptionB</div>
-        <br>
-        <input type="text" name="B">
-        <br>
-        <div>OptionC</div>
-        <br>
-        <input type="text" name="C">
+        <textarea cols=80 rows=5 name="question"></textarea>
         <br>
         <div>Answer</div>
         <br>
-        <input type="radio" name="option" value="A">A
-        <input type="radio" name="option" value="B">B
-        <input type="radio" name="option" value="C">C<br>
-        <br>
+        <input type="text" name="answer">
+        <br><br>
+
         <input type="submit" value="AddQuestion">
         <input type="reset" value="Reset">
         <br>

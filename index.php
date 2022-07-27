@@ -13,12 +13,15 @@ $_SESSION['date'] = date('Y-m-d');
 $_SESSION['level'] = "";
 $_SESSION['category'] = "";
 $_SESSION['times'] = 9999999999;//默认不限时
+//creator=0表示显示公共问题
 if (isset($_SESSION['name']))   {
-    $des1 = "<div><a href='php/addquestion.php' style='text-decoration: none;font-size: 18pt'>Add Question</a></div><br>";
+    $des0 = "<div><a href='php/questionmanage.php?creator=0' style='text-decoration: none;font-size: 18pt'>Public Questions</a></div><br>";
+    $des1 = "<div><a href='php/questionmanage.php?creator=1' style='text-decoration: none;font-size: 18pt'>Private Questions</a></div><br>";
     $des2 = "<div><a href='php/record.php' style='text-decoration: none;font-size: 18pt'>Show record</a></div>";
 }
 else {
-    $des1 = "<div title='please sign in first' style='font-size: 18pt'>Add Question</div><br>";
+    $des0 = "<div title='please sign in first' style='font-size: 18pt'>Public Questions</div><br>";
+    $des1 = "<div title='please sign in first' style='font-size: 18pt'>Private Questions</div><br>";
     $des2 = "<div title='please sign in first' style='font-size: 18pt'>Show record</div>";
 }
 ?>
@@ -34,6 +37,7 @@ else {
     <br>
     <div><a href="php/signup_form.php" style="text-decoration: none">Sign up</a></div>
     <br>
+    <?= $des0?>
     <?= $des1?>
     <?= $des2?>
 </div>

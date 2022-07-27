@@ -11,19 +11,24 @@
 //     }
 // }
 
-function popBox() {
-    let popBox = document.getElementById("popBox");
-    let popLayer = document.getElementById("popLayer");
-    popBox.style.display = "block";
-    popLayer.style.display = "block";
-}
-
 function show() {
-    window.location.href = "grade.php";
+    window.location.href = "../php/grade.php";
 }
 
 function home(){
     window.location.href="../index.php";
+}
+
+function del(id,creator){
+    window.location.href="../php/delete.php?id="+id+"&creator="+creator;
+}
+
+function upd(){
+    window.location.href="../php/addquestion.php?";
+}
+
+function add(){
+    window.location.href="../php/addquestion.php";
 }
 //
 // function showlist(list){

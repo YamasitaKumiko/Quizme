@@ -24,7 +24,7 @@ else{
 <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
 <div id="record">
     <div id="top">
-        Dear <?= $name?> :
+        Dear <?= $name?> !
         Here is your quiz records：
     </div>
 

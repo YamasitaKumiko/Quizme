@@ -59,16 +59,10 @@ function GetUserInfo($name){
     return $result;
 }
 
-function AddQuestion($name){
-    $index = "username";
+function AddQuestion($category,$level,$question,$answer,$creator){
     $PDO = getPDO();
-    $name = $PDO->quote($name);
-    $result = $PDO->query("SELECT * FROM project.user WHERE $index = $name;");
-    $user = $result->fetch();
-    $count = $user["question_donated"];
-    $count++;
-    $stmt = $PDO->prepare("UPDATE project.user SET question_donated = $count WHERE $index = $name;");
-    $stmt->execute();
+    $stmt = $PDO->prepare("INSERT INTO project.questions(`category`,`level`,`question`,`answer`,`creator`) VALUES (?,?,?,?,?);");
+    $stmt->execute([$category,$level,$question,$answer,$creator]);
 }
 
 function addrecord($name,$grade,$date,$category,$level,$size,$timed){
@@ -87,9 +81,9 @@ function showrecord($name){
     return $result;
 }
 
-//从mysql中读取公共问题
+//从mysql中读取随机问题
 //level=0表示随机难度
-function getQuestionPublic($category,$level,$size){
+function getQuestions($category,$level,$size,$creator){
     $PDO = getPDO();
     $index1 = "category";
     $index2 = "level";
@@ -97,13 +91,13 @@ function getQuestionPublic($category,$level,$size){
     $category1 = $PDO->quote($category);
 
     if($category == "random" && $level == 0){
-        $result = $PDO->query("SELECT * FROM project.questions where $index3 = 0 ORDER BY RAND() limit $size");
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator ORDER BY RAND() limit $size");
     }else if($category != "random" && $level == 0){
-        $result = $PDO->query("SELECT * FROM project.questions where $index3 = 0 and $index1 = $category1 ORDER BY RAND() limit $size");
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index1 = $category1 ORDER BY RAND() limit $size");
     }else if($category == "random" && $level != 0){
-        $result = $PDO->query("SELECT * FROM project.questions where $index3 = 0 and $index2 = $level ORDER BY RAND() limit $size");
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index2 = $level ORDER BY RAND() limit $size");
     }else{
-        $result = $PDO->query("SELECT * FROM project.questions where $index3 = 0 and $index1 = $category1 and $index2 = $level ORDER BY RAND() limit $size");
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index1 = $category1 and $index2 = $level ORDER BY RAND() limit $size");
     }
     return $result;
 }
@@ -120,4 +114,33 @@ function showWrongListByItem($item_id){
     $result = $PDO->query("SELECT project.questions.question,project.wrong_questions.wrong_answer FROM project.questions inner join project.wrong_questions 
     on project.wrong_questions.question_id = project.questions.id AND project.wrong_questions.item_id = $item_id");
     return $result;
+}
+
+//条件查询公共或私有问题(类别、难度)
+function showQuestionAll($category,$level,$creator){
+    $PDO = getPDO();
+    $index1 = "category";
+    $index2 = "level";
+    $index3 = "creator";
+    $category1 = $PDO->quote($category);
+
+    if($category == "random" && $level == 0){
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator");
+    }else if($category != "random" && $level == 0){
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index1 = $category1");
+    }else if($category == "random" && $level != 0){
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index2 = $level");
+    }else{
+        $result = $PDO->query("SELECT * FROM project.questions where $index3 = $creator and $index1 = $category1 and $index2 = $level");
+    }
+    return $result;
+}
+
+//根据id删除问题
+function deleteQueById($id){
+    $PDO = getPDO();
+    $index = "id";
+    $stmt = $PDO->prepare("DELETE FROM project.questions WHERE $index = $id");
+    $stmt->execute();
+
 }

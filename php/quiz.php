@@ -24,7 +24,7 @@ if (time() < $_SESSION['start'])
 //根据种类、难度、题量获取题目集
 function getQuestion()
 {
-    $questions = getQuestionPublic($_POST["option1"], intval($_POST["option2"]), intval($_POST["option3"]));
+    $questions = getQuestions($_POST["option1"], intval($_POST["option2"]), intval($_POST["option3"]), intval($_POST["option4"]));
     $rs = $questions->fetchAll(PDO::FETCH_BOTH);
     return $rs;
 }
@@ -94,6 +94,7 @@ if($current_question){
     <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/quiz.css">
     <script src="../js/quiz.js"></script>
+    <script src="../js/index.js"></script>
     <script src="js/jquery-3.3.1.js"></script>
 <?php
 if (!isset($_SESSION['name'])) {

@@ -1,6 +1,0 @@
-In which year did the second world war break out?;1939;1940;1938;A;1;
-In which year did the first world war break out?;1915;1913;1914;C;2;
-Which country did Newton come from?;UK;USA;Japan;A;1;
-Which country did Einstein come from?;Germany;USA;Japan;A;1;
-Which country did Edison come from?;UK;USA;France;B;1;
-Which country did Von Neumann come from?;UK;USA;Germany;B;2;
