@@ -1,0 +1,11 @@
+#add{
+    position: absolute;
+    top: 40px;
+    left: 500px;
+}
+
+#form div{
+    font-family: "Times New Roman";
+    margin-top: 10px;
+    font-size: 16pt;
+}

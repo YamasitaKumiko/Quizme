@@ -62,8 +62,19 @@ else{
             $index = 1;
             for ($index ; $index <= $count ; $index++){
                 $record = $records->fetch();
-                $id = $record['id'];
-                echo "<tr><td>$index</td><td>{$record['category']}</td><td>{$record['level']}</td><td>{$record['question']}</td><td>{$record['answer']}</td><td><button onclick='del($id,$creator)'>Delete</button></td><td><button onclick='upd()'>Update</button></td></tr>";
+                $id = $record['id']; 
+                $creator = $record['creator']; 
+                echo "<tr>
+                <td>$index</td>
+                    <td>{$record['category']}</td>
+                    <td>{$record['level']}</td>
+                    <td>{$record['question']}</td>
+                    <td>{$record['answer']}</td>
+                    <td><button onclick='del($id,$creator)'>Delete</button></td>
+                    <td>
+                        <button onclick='update($id,$creator)'>Update</button>
+                    </td>
+                </tr>";
             }
             ?>
         </table>

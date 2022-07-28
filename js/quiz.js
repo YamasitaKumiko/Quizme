@@ -23,8 +23,8 @@ function del(id,creator){
     window.location.href="../php/delete.php?id="+id+"&creator="+creator;
 }
 
-function upd(){
-    window.location.href="../php/addquestion.php?";
+function update(id,creator){
+    window.location.href="../php/updatequestion.php?id="+id+"&creator="+creator;
 }
 
 function add(){
