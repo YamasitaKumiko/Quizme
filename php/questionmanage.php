@@ -15,7 +15,23 @@ else{
     $pub = "private";
     $creator = $id;
 }
-
+$condition1 = "1 = 1";
+$condition2 = "1 = 1";
+$category = "random";
+$level = 0;
+// echo $_POST['category'];
+if(isset($_GET["category"])){
+    // $q = isset($_GET['category'])? htmlspecialchars($_GET['category']) : '';
+    $category = htmlspecialchars($_GET['category']);
+    // $condition1 = " category like '%{$category}%'";
+    $condition1 = " category = '$category'";
+    echo $condition1;
+ }
+if(isset($_GET['level'])){
+    $level = htmlspecialchars($_GET['level']);
+    $condition2 = " level = '$level'";
+    echo $condition2;
+}
 ?>
 <link rel="stylesheet" type="text/css" href="../css/common.css">
 <link rel="stylesheet" type="text/css" href="../css/record.css">
@@ -40,9 +56,24 @@ else{
 
     <div id="selector">
         <div id="box">
-            <form method="post" action="search.php" style="display: inline-block">
-                <input type="search" name="search" size = "20" placeholder="input keyword" value = "<?php if(isset($_GET['search'])){echo $_GET['search'];}?>" autofocus/>
-                <input type= "submit" value="Search"/>
+            <form method="get" action="questionmanage.php?creator=0" style="display: inline-block">
+                <input type="hidden" name="creator" value="0">
+                <div>
+                Category
+                <select name="category">
+                    <option value="geography"<?php if($category == 'geography'){ echo ' selected="selected"'; } ?>>geography</option>
+                    <option value="sport"<?php if($category == 'sport'){ echo ' selected="selected"'; } ?>>sport</option>
+                    <option value="science"<?php if($category == 'science'){ echo ' selected="selected"'; } ?>>science</option>
+                    <option value="general"<?php if($category == 'general'){ echo ' selected="selected"'; } ?>>general</option>
+                </select>
+                Difficulty
+                <select name="level">
+                    <option value=1<?php if($level == '1'){ echo ' selected="selected"'; } ?>>easy</option>
+                    <option value=2<?php if($level == '2'){ echo ' selected="selected"'; } ?>>medium</option>
+                    <option value=3<?php if($level == '3'){ echo ' selected="selected"'; } ?>>hard</option>
+                </select>
+                    <input type= "submit" value="Search"/>
+                </div>                
             </form>
             <button onclick='add()' style="display: inline-block">Add</button>
         </div>
@@ -55,9 +86,7 @@ else{
             <caption style="font-family: 'Times New Roman';font-size: 24pt;font-weight: bolder;color: brown">Questions</caption>
             <tr><th>Number</th><th>Category</th><th>Level</th><th>Question</th><th>Answer</th></tr>
             <?php
-            $category = "random";
-            $level = 0;
-            $records = showQuestionAll($category,$level,$creator);
+            $records = showQuestion($condition1,$condition2,$creator);
             $count =  $records->rowCount();
             $index = 1;
             for ($index ; $index <= $count ; $index++){

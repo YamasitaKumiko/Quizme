@@ -158,6 +158,15 @@ function showQuestionAll($category,$level,$creator){
     return $result;
 }
 
+//条件查询公共或私有问题(类别、难度)
+function showQuestion($condition1,$condition2,$creator){
+    $PDO = getPDO();
+    $sql = "select * from project.questions WHERE  {$condition1} AND {$condition2} AND 'creator' = $creator";
+    // echo $sql;
+    $result = $PDO->query("SELECT * FROM project.questions where {$condition1} and {$condition2} and 'creator' = $creator");
+    return $result;
+}
+
 //根据id删除问题
 function deleteQueById($id){
     $PDO = getPDO();
