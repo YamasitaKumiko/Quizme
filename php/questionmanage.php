@@ -8,37 +8,49 @@ $id = $_SESSION['user_id'];
 $user = GetUserInfo($name)->fetch();
 $public = intval($_GET['creator']);
 if($public == 0){
-    $pub = "public";
+    $pub = "Public";
     $creator = 0;
 }
 else{
     $pub = "private";
     $creator = $id;
 }
+/* added */
+if (isset($_SESSION['name']))   {
+    $show = "<li><a href='../php/signout.php' class='button primary'>$name</a></li>";
+}
+else {
+    $show = "<li><a href='../php/sign.php' class='button primary'>Sign</a></li>";
+}
 
 ?>
 <link rel="stylesheet" type="text/css" href="../css/common.css">
 <link rel="stylesheet" type="text/css" href="../css/record.css">
 <script src="../js/quiz.js"></script>
-<?php
+<!--new added-->
+<link rel="stylesheet" href="../assets/css/main.css" />
+<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+<body class="is-preload">
+		<div id="page-wrapper">
+<!-- Header  导航栏 -->
+<header id="header">
+    <h1 id="logo"><a href="../index.php">QuizMe <img src="../images/logo.png" style="width:20px;height:20px;"></a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../php/choose.php" style="text-decoration: none">Quiz Now</a></li>
+            <?= $show?>
+        </ul>
+    </nav>
+</header>
 
-if (!isset($_SESSION['name'])){
-    $banner = "<a href = 'signin_form.php' style='font-weight: bolder;text-decoration: none' >Sign in</a>";
-}
-else{
-    $name = $_SESSION['name'];
-    $banner = "<a href = 'signout.php' title='click to sign out' style='font-weight: bolder;text-decoration: none'>Welcome $name</a>";
-}
-?>
-<span><?= $banner?></span><br><br>
-<span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
 <div id="record">
-    <div id="top">
+<!--     <div id="top">
         Hi <?= $name?> !
         Here is the <?= $pub?> question list：
-    </div>
+    </div> -->
 
-    <div id="selector">
+<!--     <div id="selector">
         <div id="box">
             <form method="post" action="search.php" style="display: inline-block">
                 <input type="search" name="search" size = "20" placeholder="input keyword" value = "<?php if(isset($_GET['search'])){echo $_GET['search'];}?>" autofocus/>
@@ -47,12 +59,12 @@ else{
             <button onclick='add()' style="display: inline-block">Add</button>
         </div>
 
-    </div>
+    </div> -->
 
     <div id="bottom">
 
-        <table id="table" width="1200">
-            <caption style="font-family: 'Times New Roman';font-size: 24pt;font-weight: bolder;color: brown">Questions</caption>
+        <table id="table" style="width:80%;table-layout:fixed;">
+            <caption style="font-family: 'Roboto', Helvetica, sans-serif;font-size: 24pt;font-weight: bolder;color: #e44c65;margin : 30px 0"><?= $pub?> Question List of <?= $name?></caption>
             <tr><th>Number</th><th>Category</th><th>Level</th><th>Question</th><th>Answer</th></tr>
             <?php
             $category = "random";
@@ -67,8 +79,33 @@ else{
             }
             ?>
         </table>
+        <div id="selector">
+            <div id="box" style="width:80%;table-layout:fixed;">
+                <form class="search" method="post" action="../php/search.php" >
+                    <input type="search" placeholder="搜索.." name="search">
+                    <button type="submit"><i class="fa fa-search"></i></button>
+                    <button onclick='add()'>Add</button>
+                </form>
+<!--                 <form method="post" action="search.php" style="display: inline-block">
+                    <input type="search" name="search" size = "20" placeholder="input keyword" value = "<?php if(isset($_GET['search'])){echo $_GET['search'];}?>" autofocus/>
+                    <input type= "submit" value="Search"/>
+                </form>
+                <button onclick='add()' style="display: inline-block">Add</button> -->
+            </div>
+
+        </div>
     </div>
 </div>
+</div>
+</body>
+            <script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 <?php
 include("../include/closing.html");
 ?>

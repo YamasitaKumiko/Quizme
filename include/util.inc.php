@@ -7,7 +7,7 @@ function getPDO() {
     $host = 'localhost';    # TO COMPLETE
     $db   = 'project';
     $user = 'root';    # TO COMPLETE
-    $pass = '12345678';    # TO COMPLETE
+    $pass = '456789';    # TO COMPLETE
     $charset = 'utf8';
 
     $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

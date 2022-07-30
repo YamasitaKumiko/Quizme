@@ -88,7 +88,15 @@ if($current_question){
     $_SESSION['que'] = $content;
     $_SESSION['ans'] = $answer;
 }
-
+/* added */
+if (isset($_SESSION['name']))   {
+    $name = $_SESSION['name'];
+    $show = "<li><a href = '../php/signout.php' title='click to sign out' class='button primary'>$name</a></li>";
+}
+else {
+    $des1 = "";
+    $show = "<li><a href='php/sign.php' class='button primary'>Sign</a></li>";
+}
 ?>
 
     <link rel="stylesheet" type="text/css" href="../css/common.css">
@@ -96,20 +104,24 @@ if($current_question){
     <script src="../js/quiz.js"></script>
     <script src="../js/index.js"></script>
     <script src="js/jquery-3.3.1.js"></script>
-<?php
-if (!isset($_SESSION['name'])) {
-    $banner = "<a href = 'signin_form.php' style='font-weight: bolder;text-decoration: none' >Sign in</a>";
-} else {
-    $name = $_SESSION['name'];
-    $banner = "<a href = 'signout.php' title='click to sign out' style='font-weight: bolder;text-decoration: none'>Welcome $name</a>";
-}
-?>
-    <span><?= $banner ?></span><br><br>
-    <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
-    <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
 
+<body class="is-preload">
+	<div id="page-wrapper">
+<!-- Header  导航栏 -->
+        <header id="header">
+            <h1 id="logo"><a href="../index.php">QuizMe <img src="../images/logo.png" style="width:20px;height:20px;"></a></h1>
+            <nav id="nav">
+                <ul>
+                    <li><a href="../index.php">Home</a></li>
+                    <li><a href="../php/choose.php" style="text-decoration: none">Quiz Now</a></li>
+                    <?= $show?>
+                </ul>
+            </nav>
+        </header>
         <div id="quiz">
-            <div><?php
+            <div style="margin: 110px 0;"><?php
                 if($content){
                     echo $content;
                 }else{
@@ -130,7 +142,15 @@ if (!isset($_SESSION['name'])) {
                 var time = Number(<?php echo $times; ?>)
                 setTimeout("quiz_form.submit()",time)</script>
         </div>
-
+        </body>
+            <script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 <?php
 
 if ($_SESSION["index"] == $_SESSION["size"] ) {
@@ -139,8 +159,8 @@ if ($_SESSION["index"] == $_SESSION["size"] ) {
     echo '<input type="button" id="quit_button" value="Finish" onclick="popBox()">';
     echo '<div id="popLayer">';
     echo '<div id="popBox">';
-    echo '<div id="word">want to see your grade?</div>';
-    echo '<input type="button" value="no" onclick="home()">';
+    echo '<div id="word"><h3>want to see your grade?</h3></div>';
+    echo '<input type="button" style="background-color: value="no" onclick="home()">';
     echo '<input type="button" value="yes" onclick="show()">';
     echo '</div>';
     echo '</div>';
