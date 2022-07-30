@@ -15,40 +15,74 @@ $_SESSION['category'] = "";
 $_SESSION['times'] = 9999999999;//默认不限时
 //creator=0表示显示公共问题
 if (isset($_SESSION['name']))   {
-    $des0 = "<div><a href='php/questionmanage.php?creator=0' style='text-decoration: none;font-size: 18pt'>Public Questions</a></div><br>";
-    $des1 = "<div><a href='php/questionmanage.php?creator=1' style='text-decoration: none;font-size: 18pt'>Private Questions</a></div><br>";
-    $des2 = "<div><a href='php/record.php' style='text-decoration: none;font-size: 18pt'>Show record</a></div>";
+    $name = $_SESSION['name'];
+    $show = "<li><a href = '../php/signout.php' title='click to sign out' class='button primary'>$name</a></li>";
+    $des0 = "<li><a href='php/questionmanage.php?creator=0' style='text-decoration: none;font-size: 18pt'>Public Questions</a></li>";
+    $des1 = "<li><a href='php/questionmanage.php?creator=1' style='text-decoration: none;font-size: 18pt'>Private Questions</a></li>";
+    $des2 = "<li><a href='php/record.php' style='text-decoration: none;font-size: 18pt'>Show record</a></li>";
 }
 else {
-    $des0 = "<div title='please sign in first' style='font-size: 18pt'>Public Questions</div><br>";
-    $des1 = "<div title='please sign in first' style='font-size: 18pt'>Private Questions</div><br>";
-    $des2 = "<div title='please sign in first' style='font-size: 18pt'>Show record</div>";
+    $show = "<li><a href='php/sign.php' class='button primary'>Sign</a></li>";
+    $des0 = "<li title='please sign in first' style='font-size: 18pt'>Public Questions</li>";
+    $des1 = "<li title='please sign in first' style='font-size: 18pt'>Private Questions</li>";
+    $des2 = "<li title='please sign in first' style='font-size: 18pt'>Show record</li>";
 }
 ?>
 <link rel="stylesheet" type="text/css" href="css/common.css">
 <link rel="stylesheet" type="text/css" href="css/index.css">
 <script src="js/index.js"></script>
-<div id="index">
-    <h1>Welcome to QuizMe System</h1>
-    <h3>Try to test your knowledge!!</h3>
-    <div><a href="php/choose.php" style="text-decoration: none">Quiz Now</a></div>
-    <br>
-    <div><a href="php/signin_form.php" style="text-decoration: none">Sign in</a></div>
-    <br>
-    <div><a href="php/signup_form.php" style="text-decoration: none">Sign up</a></div>
-    <br>
-    <?= $des0?>
-    <?= $des1?>
-    <?= $des2?>
-</div>
-<input type="button" id="regulation" value="Hints" onclick="popBox()">
-<div id="popLayer">
-    <div id="popBox">
-        <div id="word">1:Users don't log in can answer questions, but can not add questions or view quiz records.<br></div>
-        <br>
-        <input type="button"  value="close" onclick="hide()">
-    </div>
-</div>
+<!--new added-->
+<link rel="stylesheet" href="assets/css/main.css" />
+<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+<!--end-->
+<!--new added-->
+
+<body class="is-preload">
+		<div id="page-wrapper">
+
+<!-- Header  导航栏 -->
+<header id="header">
+    <h1 id="logo"><a href="index.php">QuizMe <img src="../images/logo.png" style="width:20px;height:20px;"></a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="index.php">Home</a></li>
+            <li><a href="php/choose.php" style="text-decoration: none">Quiz Now</a></li>
+            <?= $show?>
+        </ul>
+    </nav>
+</header>
+
+
+			<!-- Main -->
+				<div id="main" class="wrapper style1">
+					<div class="container">
+						<header class="major">
+							<h2>QuizMe System</h2>
+							<p>Welcome to test your knowledge!</p>
+                            <p style = "color: #e44c65";><i>Hint: You can also answer questions without logging in, but you can't add questions or view records!</i></p>
+                            <?= $des0?>
+                            <?= $des1?>
+                            <?= $des2?>
+						</header>
+                                    <!-- Content -->
+							<section id="content">
+								<a href="#" class="image fit"><img src="images/bg.jpg" alt="" /></a>
+								
+							</section>
+					</div>
+				</div>
+
+		</div>
+</body>
+		<!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
 <?php
 include("include/closing.html");
 ?>

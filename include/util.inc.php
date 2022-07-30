@@ -2,48 +2,26 @@
 
 $PDO = getPDO();
 
-function console($log='')
-{
-     switch (empty($log)) {
-          case False:
-              $out = json_encode($log);
-              $GLOBALS['console'] .= 'console.log('.$out.');';
-              break;
-          
-          default:
-             echo '<script type="text/javascript">'.$GLOBALS['console'].'</script>';
-     }
-}
-
 // returns a PDO object
 function getPDO() {
     $host = 'localhost';    # TO COMPLETE
     $db   = 'project';
     $user = 'root';    # TO COMPLETE
     $pass = '1123';    # TO COMPLETE
-    #$charset = 'utf8';
+    $charset = 'utf8';
 
-    $dsn = "mysql:host=$host;dbname=$db";
+    $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
     $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
     try {
-        echo extension_loaded("redis");
         return new PDO($dsn, $user, $pass, $options);
     } catch (\PDOException $e) {
-        // console($e->getMessage())
-        // console((int)$e->getCode())
-        echo "$e";
-        echo '_________________________________________________-';
-        echo extension_loaded("mysqli");
-        error_log(print_r($e, true));
         throw new \PDOException($e->getMessage(), (int)$e->getCode());
     }
 }
-
-
 
 //csv文件导入数据库
 function importmysql($filepath){

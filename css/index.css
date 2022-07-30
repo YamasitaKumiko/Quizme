@@ -6,7 +6,7 @@ h3 {
     height:24px;
 }
 
-#index{
+/*#index{
     position: relative;
     text-align: center;
     margin-top: 50px;
@@ -14,7 +14,7 @@ h3 {
 
 #index div a{
     font-size: 18pt;
-}
+}*/
 
 #popLayer {
     display: none;
@@ -26,7 +26,7 @@ h3 {
     left: 0;
     z-index: 10;
     -moz-opacity: 0.8;
-    opacity:.80;
+/*     opacity:.80; */
     filter: alpha(opacity=80);
 }
 
@@ -46,12 +46,6 @@ h3 {
     text-align: right;
     margin-right: 5px;
     background-color: #b34343;
-}
-
-#regulation{
-    position: absolute;
-    left: 40px;
-    top: 40px;
 }
 
 #word{

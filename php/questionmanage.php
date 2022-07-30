@@ -32,21 +32,33 @@ if(isset($_GET['level'])){
     $condition2 = " level = '$level'";
     echo $condition2;
 }
+if (isset($_SESSION['name']))   {
+    $show = "<li><a href='../php/signout.php' class='button primary'>$name</a></li>";
+}
+else {
+    $show = "<li><a href='../php/sign.php' class='button primary'>Sign</a></li>";
+}
+
 ?>
 <link rel="stylesheet" type="text/css" href="../css/common.css">
 <link rel="stylesheet" type="text/css" href="../css/record.css">
 <script src="../js/quiz.js"></script>
-<?php
-
-if (!isset($_SESSION['name'])){
-    $banner = "<a href = 'signin_form.php' style='font-weight: bolder;text-decoration: none' >Sign in</a>";
-}
-else{
-    $name = $_SESSION['name'];
-    $banner = "<a href = 'signout.php' title='click to sign out' style='font-weight: bolder;text-decoration: none'>Welcome $name</a>";
-}
-?>
-<span><?= $banner?></span><br><br>
+<!--new added-->
+<link rel="stylesheet" href="../assets/css/main.css" />
+<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+<body class="is-preload">
+		<div id="page-wrapper">
+<!-- Header  导航栏 -->
+<header id="header">
+    <h1 id="logo"><a href="../index.php">QuizMe <img src="../images/logo.png" style="width:20px;height:20px;"></a></h1>
+    <nav id="nav">
+        <ul>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="../php/choose.php" style="text-decoration: none">Quiz Now</a></li>
+            <?= $show?>
+        </ul>
+    </nav>
+</header>
 <span><a href="../index.php" style="text-decoration: none" title="back to home page">Home</a></span>
 <div id="record">
     <div id="top">
@@ -55,7 +67,7 @@ else{
     </div>
 
     <div id="selector">
-        <div id="box">
+        <div id="box" style="text-align:center">
             <form method="get" action="questionmanage.php?creator=0" style="display: inline-block">
                 <input type="hidden" name="creator" value="0">
                 <div>
@@ -73,17 +85,17 @@ else{
                     <option value=3<?php if($level == '3'){ echo ' selected="selected"'; } ?>>hard</option>
                 </select>
                     <input type= "submit" value="Search"/>
-                </div>                
+                </div>
             </form>
-            <button onclick='add()' style="display: inline-block">Add</button>
+            <button onclick='add()' style="display: block;margin:0 auto;">Add</button>
         </div>
 
     </div>
 
     <div id="bottom">
 
-        <table id="table" width="1200">
-            <caption style="font-family: 'Times New Roman';font-size: 24pt;font-weight: bolder;color: brown">Questions</caption>
+        <table id="table" style="width:80%;table-layout:fixed;">
+            <caption style="font-family: 'Roboto', Helvetica, sans-serif;font-size: 24pt;font-weight: bolder;color: #e44c65;margin : 30px 0"><?= $pub?> Question List of <?= $name?></caption>
             <tr><th>Number</th><th>Category</th><th>Level</th><th>Question</th><th>Answer</th></tr>
             <?php
             $records = showQuestion($condition1,$condition2,$creator);
@@ -91,8 +103,8 @@ else{
             $index = 1;
             for ($index ; $index <= $count ; $index++){
                 $record = $records->fetch();
-                $id = $record['id']; 
-                $creator = $record['creator']; 
+                $id = $record['id'];
+                $creator = $record['creator'];
                 echo "<tr>
                 <td>$index</td>
                     <td>{$record['category']}</td>
@@ -107,8 +119,21 @@ else{
             }
             ?>
         </table>
+       <br/>
+       <br/>
+
     </div>
 </div>
+</div>
+</body>
+            <script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/jquery.dropotron.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
 <?php
 include("../include/closing.html");
 ?>
