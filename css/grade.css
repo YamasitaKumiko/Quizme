@@ -1,0 +1,10 @@
+#grade{
+    position: absolute;
+    top: 50px;
+    left: 630px;
+    text-align: center;
+}
+
+#grade h2{
+    font-family: "Roboto", Helvetica, sans-serif;
+}

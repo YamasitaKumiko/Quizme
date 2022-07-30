@@ -1,0 +1,29 @@
+
+#quiz{
+/*     background-color: white; */
+/*     width: 600px;
+    height: 300px; */
+/*     border: 1px  solid #648647; */
+    font-size: 18pt;
+    font-family: "Roboto", Helvetica, sans-serif;
+/*     position: absolute; */
+    top: 50px;
+    left: 430px;
+    text-align: center;
+}
+
+#quit_button{
+/*     position: absolute;
+    top: 400px;
+    left: 710px; */
+    margin: 50px auto;
+    background-color: #e13652;
+}
+
+#check{
+    visibility: hidden;
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
