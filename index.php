@@ -42,7 +42,7 @@ else {
 
 <!-- Header  导航栏 -->
 <header id="header">
-    <h1 id="logo"><a href="index.php">QuizMe <img src="../images/logo.png" style="width:20px;height:20px;"></a></h1>
+    <h1 id="logo"><a href="index.php">QuizMe <img src="./images/logo.png" style="width:20px;height:20px;"></a></h1>
     <nav id="nav">
         <ul>
             <li><a href="index.php">Home</a></li>

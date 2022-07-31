@@ -23,12 +23,12 @@ $level = 0;
 if(isset($_GET["category"])){
     $category = htmlspecialchars($_GET['category']);
     $condition1 = " category = '$category'";
-    echo $condition1;
+    // echo $condition1;
  }
 if(isset($_GET['level'])){
     $level = htmlspecialchars($_GET['level']);
     $condition2 = " level = '$level'";
-    echo $condition2;
+    // echo $condition2;
 }
 if (isset($_SESSION['name']))   {
     $show = "<li><a href='../php/signout.php' class='button primary'>$name</a></li>";
