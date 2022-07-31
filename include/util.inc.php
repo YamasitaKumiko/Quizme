@@ -166,6 +166,7 @@ function getQuestionById($id){
 function updateQueById($id,$category,$level,$question,$answer,$creator) {
     $PDO = getPDO();
     $index = "id";
+    $question =  addslashes($question);
     $stmt = $PDO->prepare("UPDATE project.questions SET category='$category',level='$level',question='$question',answer='$answer',creator='$creator'  WHERE $index = $id");
     $stmt->execute();
 }

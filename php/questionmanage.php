@@ -21,9 +21,7 @@ $category = "random";
 $level = 0;
 // echo $_POST['category'];
 if(isset($_GET["category"])){
-    // $q = isset($_GET['category'])? htmlspecialchars($_GET['category']) : '';
     $category = htmlspecialchars($_GET['category']);
-    // $condition1 = " category like '%{$category}%'";
     $condition1 = " category = '$category'";
     echo $condition1;
  }
